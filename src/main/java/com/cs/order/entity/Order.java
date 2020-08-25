@@ -29,5 +29,7 @@ public class Order {
     @NotNull(message = "Address code is mandatory")
     @Embedded
     private Address address;
+    @NotNull(message = "Total can not be null")
+    private Double total;
 
 }

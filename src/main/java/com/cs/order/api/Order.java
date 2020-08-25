@@ -20,6 +20,7 @@ public class Order {
     private LocalDate orderDate;
     private Address  address;
     private List<OrderItem> orderItem;
+    private double total;
 
 
 }

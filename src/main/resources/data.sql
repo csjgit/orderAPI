@@ -13,6 +13,7 @@ CREATE TABLE OrderData (
 id INT AUTO_INCREMENT  PRIMARY KEY,
   CustomerName int NOT NULL,
   OrderDate Date NOT NULL,
+  Total Double NOT NULL,
   AddressId INT,
   foreign key (AddressId) references Address(AddressId)
 );
