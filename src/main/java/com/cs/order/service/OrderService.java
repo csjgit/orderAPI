@@ -5,7 +5,7 @@ import com.cs.order.client.OrderItemClient;
 import com.cs.order.dao.IOrderRepository;
 import com.cs.order.dao.OrderDao;
 import com.cs.order.exception.OrderNotFoundException;
-import com.cs.order.transform.Transformer;
+import com.cs.order.transform.ApiToEntity;
 import com.cs.orderitem.api.OrderItem;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class OrderService implements IOrderService {
         if (Objects.isNull(order))
             throw new IllegalArgumentException("Order can not be null");
         List<Long> orderItemIds =orderItemClient.createOrderItems(order.getOrderItem()).getBody();
-        com.cs.order.entity.Order entity = Transformer.converToEntity(order);
+        com.cs.order.entity.Order entity = ApiToEntity.converToEntity(order);
         com.cs.order.entity.Order saved =dao.save(entity);
         orderDao.saveOrderIdToOrderItems(saved.getId(),orderItemIds);
 
@@ -41,7 +41,7 @@ public class OrderService implements IOrderService {
     public com.cs.order.api.Order getOrder(Long orderId) throws OrderNotFoundException {
         Optional<com.cs.order.entity.Order>orderItem = dao.findById(orderId);
         com.cs.order.entity.Order oi =  orderItem.orElseThrow(()->  new OrderNotFoundException());
-        Order apiOrder = Transformer.converToAPI(oi);
+        Order apiOrder = ApiToEntity.converToAPI(oi);
         List<Long>orderIds= orderDao.getOrderItemsById(orderId);
         List<OrderItem>orderItems = orderItemClient.getOrderItems(orderIds).getBody();
         apiOrder.setOrderItem(orderItems);

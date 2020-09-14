@@ -4,8 +4,8 @@ import com.cs.order.entity.Order;
 
 import java.sql.Date;
 
-public class Transformer {
-    private Transformer() {
+public class ApiToEntity {
+    private ApiToEntity() {
 
     }
 
